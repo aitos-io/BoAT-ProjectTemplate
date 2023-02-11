@@ -1,1 +1,1 @@
-# BoAT-TemplateProject
+# BoAT-ProjectTemplate
