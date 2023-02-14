@@ -22,6 +22,7 @@
 import sys
 import os.path
 import string
+import shutil
 
 #from git import Repo
 import os
@@ -113,7 +114,7 @@ class ConfigContentGen():
     # env
     def gen_env(self):
         self.config_content += '# Environment-specific Settings\n'
-        self.config_content += 'include $(BOAT_BASE_DIR)/BoAT-SupportLayer/vendor/platform/$(PLATFORM_TARGET)/external.env\n'
+        self.config_content += 'include $(BOAT_BASE_DIR)/BoAT-SupportLayer/platform/$(PLATFORM_TARGET)/external.env\n'
         self.config_content += '\n\n'
     
     # gcc version
