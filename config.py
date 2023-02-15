@@ -513,6 +513,10 @@ class ConfigContentGen():
         return True
 
 def main():
+    #Rename .git/HEAD to disable git operation of BoAT-ProjectTemplate 
+    isExists = os.path.exists('./.git/HEAD')
+    if isExists:
+    	os.rename('./.git/HEAD','./.git/HEAD-bak')
 
     configContent_obj = ConfigContentGen()
 
