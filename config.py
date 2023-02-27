@@ -60,11 +60,48 @@ infoBoatSupportLayer = 'We will clone/pull the BoATSupportLayer repository!\n'
 
 infoBoatEngine = 'Clone/pull the BoATEnigne repository, y/n?(y)'
 
+infoBlockchain = ' Select blockchain list as below:\n' + \
+        ' [1] ETHEREUM          : \n' + \
+        ' [2] PLATON            : \n' + \
+        ' [3] PLATONE           : \n' + \
+        ' [4] FISCOBCOS         : \n' + \
+        ' [5] HLFABRIC          : \n' + \
+        ' [6] HWBCS             : \n' + \
+        ' [7] CHAINMAKER_V1     : \n' + \
+        ' [8] CHAINMAKER_V2     : \n' + \
+        ' [9] VENACHAIN         : \n' + \
+        ' [a] QUORUM            : \n' + \
+        ' [b] CITA              : \n' + \
+        ' [0] All block chains\n' 
+
+infoBlockchainExample = ' Example:\n' + \
+            '  Select blockchain list as below:\n' + \
+            '  input:1a\n' + \
+            '  Blockchain selected:\n' + \
+            '   [1] ETHEREUM\n' + \
+            '   [a] QUORUM\n\n'
+
+'''
+exportBlockchain = 'export BOAT_PROTOCOL_USE_ETHEREUM\n' + \ 
+                   'export BOAT_PROTOCOL_USE_PLATON\n' + \
+                   'export BOAT_PROTOCOL_USE_PLATONE\n' + \
+                   'export BOAT_PROTOCOL_USE_FISCOBCOS\n' + \
+                   'export BOAT_PROTOCOL_USE_HLFABRIC\n' + \
+                   'export BOAT_PROTOCOL_USE_HWBCS\n' + \
+                   'export BOAT_PROTOCOL_USE_CHAINMAKER_V1\n' + \
+                   'export BOAT_PROTOCOL_USE_CHAINMAKER_V2\n' + \
+                   'export BOAT_PROTOCOL_USE_VENACHAIN\n' + \
+                   'export BOAT_PROTOCOL_USE_QUORUM\n' + \
+                   'export BOAT_PROTOCOL_USE_CITA\n' + \
+                   'export BOAT_DISCOVERY_PEER_QUERY\n' + \
+                   'export BOAT_USE_DEFAULT_CJSON\n'
+'''
 
 class ConfigContentGen():
     def __init__(self):
         self.config_content = ''
         self.usinglibs = ''
+        self.exportblockchain = ''
 
     def save_config_file(self):
             #config_file_name = './vendor/platform/include/boatconfig.h'
@@ -103,6 +140,19 @@ class ConfigContentGen():
         self.config_content += 'BOAT_BUILD_DIR := $(BOAT_BASE_DIR)/build\n'
         self.config_content += '\n\n'
     
+    # blockchain
+    def gen_blockchain(self,pf):  
+        self.config_content += '# Blockchains:\n'
+        self.config_content += pf +'\n\n'
+        self.config_content += '# Chain config check\n'
+        self.config_content += 'ifeq ($(BOAT_PROTOCOL_USE_ETHEREUM)_$(BOAT_PROTOCOL_USE_PLATON)_$(BOAT_PROTOCOL_USE_PLATONE)_$(BOAT_PROTOCOL_USE_FISCOBCOS)_$(BOAT_PROTOCOL_USE_HLFABRIC)_$(BOAT_PROTOCOL_USE_HWBCS)_$(BOAT_PROTOCOL_USE_CHAINMAKER_V1)_$(BOAT_PROTOCOL_USE_CHAINMAKER_V2)_$(BOAT_PROTOCOL_USE_VENACHAIN)_$(BOAT_PROTOCOL_USE_QUORUM)_$(BOAT_PROTOCOL_USE_CITA), 0_0_0_0_0_0_0_0_0_0_0)\n'
+        self.config_content += '    $(error Select at least one chain)\n'
+        self.config_content += 'endif\n'
+        self.config_content += '\n'
+        self.config_content += 'ifeq ($(BOAT_PROTOCOL_USE_CHAINMAKER_V1)_$(BOAT_PROTOCOL_USE_CHAINMAKER_V2), 1_1)\n'
+        self.config_content += '    $(error Select only one chainmaker version)\n'
+        self.config_content += 'endif\n'
+
     # platform
     def gen_platform(self,pf):  
         self.config_content += '# Platform target\n'
@@ -263,17 +313,21 @@ class ConfigContentGen():
 
     # export
     def gen_export(self):
-        self.config_content += '#export BOAT_PROTOCOL_USE_ETHEREUM\n'
-        self.config_content += '#export BOAT_PROTOCOL_USE_PLATON\n'
-        self.config_content += '#export BOAT_PROTOCOL_USE_PLATONE\n'
-        self.config_content += '#export BOAT_PROTOCOL_USE_FISCOBCOS\n'
-        self.config_content += '#export BOAT_PROTOCOL_USE_HLFABRIC\n'
-        self.config_content += '#export BOAT_PROTOCOL_USE_HWBCS\n'
-        self.config_content += '#export BOAT_PROTOCOL_USE_CHAINMAKER_V1\n'
-        self.config_content += '#export BOAT_PROTOCOL_USE_CHAINMAKER_V2\n'
-        self.config_content += '#export BOAT_PROTOCOL_USE_VENACHAIN\n'
-        self.config_content += '#export BOAT_PROTOCOL_USE_QUORUM\n'
-        self.config_content += '#export BOAT_PROTOCOL_USE_CITA\n'
+
+        if self.usinglibs.find('BoAT-Engine') != -1:
+            self.config_content += 'export BOAT_PROTOCOL_USE_ETHEREUM\n'
+            self.config_content += 'export BOAT_PROTOCOL_USE_PLATON\n'
+            self.config_content += 'export BOAT_PROTOCOL_USE_PLATONE\n'
+            self.config_content += 'export BOAT_PROTOCOL_USE_FISCOBCOS\n'
+            self.config_content += 'export BOAT_PROTOCOL_USE_HLFABRIC\n'
+            self.config_content += 'export BOAT_PROTOCOL_USE_HWBCS\n'
+            self.config_content += 'export BOAT_PROTOCOL_USE_CHAINMAKER_V1\n'
+            self.config_content += 'export BOAT_PROTOCOL_USE_CHAINMAKER_V2\n'
+            self.config_content += 'export BOAT_PROTOCOL_USE_VENACHAIN\n'
+            self.config_content += 'export BOAT_PROTOCOL_USE_QUORUM\n'
+            self.config_content += 'export BOAT_PROTOCOL_USE_CITA\n\n'
+            #self.config_content += exportBlockchain
+        
         self.config_content += 'export BOAT_DISCOVERY_PEER_QUERY\n'
         self.config_content += 'export BOAT_USE_DEFAULT_CJSON\n'
         self.config_content += '\n'
@@ -422,8 +476,97 @@ class ConfigContentGen():
             print('No\n')
             return False
 
-    def chooseplatform(self):
-        ppf = 'Choose the platform list as below:\n' + \
+    def selectblockchain(self):
+        ppf = infoBlockchain + \
+              infoBlockchainExample + \
+              'input:'
+
+        chos = input(ppf)
+        retBlockchain = ''
+        
+        blockchainSelected = ''
+        blockchainShow = ''
+
+        if chos.find('0') != -1:
+            blockchainShow = ('Select all blockchains!\n')
+            chos = infoBlockchain
+        else:
+            blockchainShow = 'Blockchain selected:\n'
+            
+        
+        if chos.find('1') != -1:
+            blockchainSelected += (' [1] ETHEREUM\n')
+            retBlockchain += 'BOAT_PROTOCOL_USE_ETHEREUM           ?= 1\n'
+        else:
+            retBlockchain += 'BOAT_PROTOCOL_USE_ETHEREUM           ?= 0\n'
+
+        if chos.find('2') != -1:
+            blockchainSelected += (' [2] PLATON\n')
+            retBlockchain += 'BOAT_PROTOCOL_USE_PLATON             ?= 1\n'
+        else:
+            retBlockchain += 'BOAT_PROTOCOL_USE_PLATON             ?= 0\n'
+
+        if chos.find('3') != -1:
+            blockchainSelected += (' [3] PLATONE\n')
+            retBlockchain += 'BOAT_PROTOCOL_USE_PLATONE            ?= 1\n'
+        else:
+            retBlockchain += 'BOAT_PROTOCOL_USE_PLATONE            ?= 0\n'
+
+        if chos.find('4') != -1:
+            blockchainSelected += (' [4] FISCOBCOS\n')
+            retBlockchain += 'BOAT_PROTOCOL_USE_FISCOBCOS          ?= 1\n'
+        else:
+            retBlockchain += 'BOAT_PROTOCOL_USE_FISCOBCOS          ?= 0\n'
+
+        if chos.find('5') != -1:
+            blockchainSelected += (' [5] HLFABRIC\n')
+            retBlockchain += 'BOAT_PROTOCOL_USE_HLFABRIC           ?= 1\n'
+        else:
+            retBlockchain += 'BOAT_PROTOCOL_USE_HLFABRIC           ?= 0\n'
+
+        if chos.find('6') != -1:
+            blockchainSelected += (' [6] HWBCS\n')
+            retBlockchain += 'BOAT_PROTOCOL_USE_HWBCS              ?= 1\n'
+        else:
+            retBlockchain += 'BOAT_PROTOCOL_USE_HWBCS              ?= 0\n'
+
+        if chos.find('7') != -1:
+            blockchainSelected += (' [7] CHAINMAKER_V1\n')
+            retBlockchain += 'BOAT_PROTOCOL_USE_CHAINMAKER_V1      ?= 1\n'
+        else:
+            retBlockchain += 'BOAT_PROTOCOL_USE_CHAINMAKER_V1      ?= 0\n'
+
+        if chos.find('8') != -1:
+            blockchainSelected += (' [8] CHAINMAKER_V2\n')
+            retBlockchain += 'BOAT_PROTOCOL_USE_CHAINMAKER_V2      ?= 1\n'
+        else:
+            retBlockchain += 'BOAT_PROTOCOL_USE_CHAINMAKER_V2      ?= 0\n'
+
+        if chos.find('9') != -1:
+            blockchainSelected += (' [9] VENACHAIN\n')
+            retBlockchain += 'BOAT_PROTOCOL_USE_VENACHAIN          ?= 1\n'
+        else:
+            retBlockchain += 'BOAT_PROTOCOL_USE_VENACHAIN          ?= 0\n'
+
+        if chos.find('a') != -1:
+            blockchainSelected += (' [a] QUORUM\n')
+            retBlockchain += 'BOAT_PROTOCOL_USE_QUORUM             ?= 1\n'
+        else:
+            retBlockchain += 'BOAT_PROTOCOL_USE_QUORUM             ?= 0\n'
+
+        if chos.find('b') != -1:
+            blockchainSelected += (' [b] CITA\n')
+            retBlockchain += 'BOAT_PROTOCOL_USE_CITA               ?= 1\n'
+        else:
+            retBlockchain += 'BOAT_PROTOCOL_USE_CITA               ?= 0\n' 
+
+        if blockchainSelected == '':
+            blockchainSelected = '    Selected NULL!\n'
+        print(blockchainShow + blockchainSelected)
+        return retBlockchain
+
+    def selectplatform(self):
+        ppf = 'Select the platform list as below:\n' + \
             '[1] linux-default             : Default linux platform\n' +\
             '[2] Fibocom-L610              : Fibocom\'s LTE Cat.1 module\n' +\
             '[3] create a new platform\n'
@@ -535,8 +678,13 @@ def main():
         # head
         configContent_obj.gen_Head()
 
+        # block chain
+        if configContent_obj.usinglibs.find('BoAT-Engine') != -1:
+            myblockchain = configContent_obj.selectblockchain()        
+            configContent_obj.gen_blockchain(myblockchain)
+
         # platform
-        myplatform = configContent_obj.chooseplatform()        
+        myplatform = configContent_obj.selectplatform()        
         configContent_obj.gen_platform(myplatform)
  
         # env
