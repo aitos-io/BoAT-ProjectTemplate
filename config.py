@@ -636,6 +636,8 @@ class ConfigContentGen():
         return False
     
     def checkRepo(self,reponame):
+        if reponame == '':
+            return True
         isExists = os.path.exists(reponame) 
         # If the folder exists, the repository is considered to have been downloaded
         if not isExists:
