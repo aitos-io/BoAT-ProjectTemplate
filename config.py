@@ -665,7 +665,9 @@ def main():
 
     f = open('./BoATLibs.conf')
     for name in f.readlines():
-        configContent_obj.checkRepo(name.strip('\r\n *<>:	\\\/'))
+        if configContent_obj.checkRepo(name.strip('\r\n *<>:	\\\/')) == False:
+            print('Repositery cloning failed: ',name.strip('\n'),'\n')
+            return
 
     # overwrite Makefile
     if configContent_obj.usinglibs == '':
