@@ -311,6 +311,20 @@ class ConfigContentGen():
         self.config_content += 'LINK_LIBS := $(EXTERNAL_LIBS) $(TARGET_SPEC_LIBS)\n'
         self.config_content += '\n'
 
+    # Set parameter to scripts
+    def gen_ScriptsParameters(self):
+        self.config_content += 'SCRIPTS_PARAM += "BOAT_PROTOCOL_USE_ETHEREUM=$(BOAT_PROTOCOL_USE_ETHEREUM)" \\\n'
+        self.config_content += '                 "BOAT_PROTOCOL_USE_PLATON=$(BOAT_PROTOCOL_USE_PLATON)" \\\n'
+        self.config_content += '                 "BOAT_PROTOCOL_USE_PLATONE=$(BOAT_PROTOCOL_USE_PLATONE)" \\\n'
+        self.config_content += '                 "BOAT_PROTOCOL_USE_FISCOBCOS=$(BOAT_PROTOCOL_USE_FISCOBCOS)" \\\n'
+        self.config_content += '                 "BOAT_PROTOCOL_USE_HLFABRIC=$(BOAT_PROTOCOL_USE_HLFABRIC)" \\\n'
+        self.config_content += '                 "BOAT_PROTOCOL_USE_HWBCS=$(BOAT_PROTOCOL_USE_HWBCS)" \\\n'
+        self.config_content += '                 "BOAT_PROTOCOL_USE_CHAINMAKER_V1=$(BOAT_PROTOCOL_USE_CHAINMAKER_V1)" \\\n'
+        self.config_content += '                 "BOAT_PROTOCOL_USE_CHAINMAKER_V2=$(BOAT_PROTOCOL_USE_CHAINMAKER_V2)" \\\n'
+        self.config_content += '                 "BOAT_PROTOCOL_USE_VENACHAIN=$(BOAT_PROTOCOL_USE_VENACHAIN)" \\\n'
+        self.config_content += '                 "BOAT_PROTOCOL_USE_QUORUM=$(BOAT_PROTOCOL_USE_QUORUM)" \\\n'
+        self.config_content += '                 "BOAT_PROTOCOL_USE_CITA=$(BOAT_PROTOCOL_USE_CITA)"\n'
+
     # export
     def gen_export(self):
 
@@ -345,7 +359,8 @@ class ConfigContentGen():
     
     # .PHONY
     def gen_PHONY(self):
-        self.config_content += '.PHONY: all' #all boatlibs createdir boatwalletlib vendorlib demo tests clean cleanboatwallet cleanvendor cleantests\n'
+        # all boatlibs createdir boatwalletlib vendorlib demo tests clean cleanboatwallet cleanvendor cleantests\n'
+        self.config_content += '.PHONY: all'
         for addobj in self.usinglibs.split("\n"):
             #curlib = line.decode()
             if addobj == '':
@@ -386,15 +401,12 @@ class ConfigContentGen():
         self.config_content += '\n'        
     
         self.config_content += 'createdir:\n'
-        self.config_content += '#	@echo generate header file boatconfig.h...\n'
-        self.config_content += '#	python ./vendor/platform/$(PLATFORM_TARGET)/scripts/gen.py $(PLATFORM_TARGET) $(SCRIPTS_PARAM)\n'
-        self.config_content += '#	@echo generate done.\n'
+        self.config_content += '	@echo generate header file boatconfig.h...\n'
+        self.config_content += '	python ./BoAT-SupportLayer/platform/$(PLATFORM_TARGET)/scripts/gen.py $(PLATFORM_TARGET) $(SCRIPTS_PARAM)\n'
+        self.config_content += '	@echo generate done.\n'
         self.config_content += '# boatconfig is no longer used\n'
         self.config_content += '	$(BOAT_MKDIR) -p $(BOAT_LIB_DIR)\n'
         self.config_content += '	$(BOAT_MKDIR) -p $(BOAT_BUILD_DIR)\n'
-        self.config_content += '\n'
-        self.config_content += 'boatwalletlib:\n'
-        self.config_content += '	make -C $(BOAT_BASE_DIR)/sdk all\n'
         self.config_content += '\n'
         self.config_content += 'vendorlib:\n'
         self.config_content += '	make -C $(BOAT_BASE_DIR)/BoAT-SupportLayer all\n'
@@ -411,7 +423,8 @@ class ConfigContentGen():
     
     # clean:
     def gen_clean(self):
-        self.config_content += 'clean:' # cleanboatwallet cleanvendor cleandemo cleantests\n'
+        # cleanboatwallet cleanvendor cleandemo cleantests\n'
+        self.config_content += 'clean:'
         for addobj in self.usinglibs.split("\n"):
             #curlib = line.decode()
             if addobj == '':
@@ -433,10 +446,6 @@ class ConfigContentGen():
             self.config_content += '	make -C $(BOAT_BASE_DIR)/'+addobj+' clean\n'
             self.config_content += '\n'
 
-    
-        self.config_content += 'cleanboatwallet:\n'
-        self.config_content += '	make -C $(BOAT_BASE_DIR)/sdk clean\n'
-        self.config_content += '\n'
         self.config_content += 'cleanvendor:\n'
         self.config_content += '	make -C $(BOAT_BASE_DIR)/BoAT-SupportLayer clean\n'
         self.config_content += '\n'
@@ -596,8 +605,8 @@ class ConfigContentGen():
                 subp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
             
             except AssertionError as err:
-                print('assert error');
-            #else:
+                print('assert error')
+            # else:
             #    print(' no error')
             retry = False
 
@@ -605,8 +614,8 @@ class ConfigContentGen():
                 if subp.wait() != 0:
                     print("cmd failed \n")
                     retry = True
-                    break;
-                
+                    break
+
             if retry:
                 if not self.getEnterAsNo('git cmd failed, try again?'):
                     print('failed ,but no retry\n')
@@ -711,6 +720,9 @@ def main():
 
         # Combine FLAGS
         configContent_obj.gen_CombineFLAGS()
+
+        # Set parameter to scripts
+        configContent_obj.gen_ScriptsParameters()
 
         # export
         configContent_obj.gen_export()
