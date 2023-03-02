@@ -81,22 +81,6 @@ infoBlockchainExample = ' Example:\n' + \
             '   [1] ETHEREUM\n' + \
             '   [a] QUORUM\n\n'
 
-'''
-exportBlockchain = 'export BOAT_PROTOCOL_USE_ETHEREUM\n' + \ 
-                   'export BOAT_PROTOCOL_USE_PLATON\n' + \
-                   'export BOAT_PROTOCOL_USE_PLATONE\n' + \
-                   'export BOAT_PROTOCOL_USE_FISCOBCOS\n' + \
-                   'export BOAT_PROTOCOL_USE_HLFABRIC\n' + \
-                   'export BOAT_PROTOCOL_USE_HWBCS\n' + \
-                   'export BOAT_PROTOCOL_USE_CHAINMAKER_V1\n' + \
-                   'export BOAT_PROTOCOL_USE_CHAINMAKER_V2\n' + \
-                   'export BOAT_PROTOCOL_USE_VENACHAIN\n' + \
-                   'export BOAT_PROTOCOL_USE_QUORUM\n' + \
-                   'export BOAT_PROTOCOL_USE_CITA\n' + \
-                   'export BOAT_DISCOVERY_PEER_QUERY\n' + \
-                   'export BOAT_USE_DEFAULT_CJSON\n'
-'''
-
 class ConfigContentGen():
     def __init__(self):
         self.config_content = ''
@@ -386,6 +370,15 @@ class ConfigContentGen():
     def gen_genpy(self):  
 
         self.config_content += '\n\n'
+    #gen test
+    def gen_test(self):
+        self.config_content += 'test: createdir\n'
+    	#  make -C $(BOAT_BASE_DIR)/BoAT-SupportLayer test
+        for addobj in self.usinglibs.split("\n"):
+            if addobj == '':
+                continue
+            self.config_content += '	make -C $(BOAT_BASE_DIR)/'+addobj+' test\n'
+        self.config_content += '\n'
     
     # targets
     def gen_targets(self):
@@ -401,10 +394,11 @@ class ConfigContentGen():
         self.config_content += '\n'        
     
         self.config_content += 'createdir:\n'
-        self.config_content += '	@echo generate header file boatconfig.h...\n'
-        self.config_content += '	python ./BoAT-SupportLayer/platform/$(PLATFORM_TARGET)/scripts/gen.py $(PLATFORM_TARGET) $(SCRIPTS_PARAM)\n'
-        self.config_content += '	@echo generate done.\n'
-        self.config_content += '# boatconfig is no longer used\n'
+        if self.usinglibs.find('BoAT-Engine') != -1:
+            self.config_content += '	@echo generate header file boatconfig.h...\n'
+            self.config_content += '	python ./BoAT-SupportLayer/platform/$(PLATFORM_TARGET)/scripts/gen.py $(PLATFORM_TARGET) $(SCRIPTS_PARAM)\n'
+            self.config_content += '	@echo generate done.\n'
+            self.config_content += '# boatconfig is using\n'
         self.config_content += '	$(BOAT_MKDIR) -p $(BOAT_LIB_DIR)\n'
         self.config_content += '	$(BOAT_MKDIR) -p $(BOAT_BUILD_DIR)\n'
         self.config_content += '\n'
@@ -722,7 +716,8 @@ def main():
         configContent_obj.gen_CombineFLAGS()
 
         # Set parameter to scripts
-        configContent_obj.gen_ScriptsParameters()
+        if configContent_obj.usinglibs.find('BoAT-Engine') != -1:
+            configContent_obj.gen_ScriptsParameters()
 
         # export
         configContent_obj.gen_export()
@@ -736,6 +731,9 @@ def main():
         # gen.py
         #configContent_obj.gen_genpy()  
 
+        # gen test
+        configContent_obj.gen_test()
+        
         # targets
         configContent_obj.gen_targets()
 
