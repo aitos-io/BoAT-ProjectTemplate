@@ -596,7 +596,7 @@ class ConfigContentGen():
             print(cmd+'\n')
             #self.boatlog('current path:',os.getcwd())
             try:
-                subp = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+                subp = subprocess.Popen(cmd, shell=True)
             
             except AssertionError as err:
                 print('assert error')
