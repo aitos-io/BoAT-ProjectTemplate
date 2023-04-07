@@ -380,6 +380,22 @@ class ConfigContentGen():
             self.config_content += '	make -C $(BOAT_BASE_DIR)/'+addobj+' test\n'
         self.config_content += '\n'
     
+    def gen_demo(self):
+        self.config_content += 'demo: createdir\n'
+    	#  make -C $(BOAT_BASE_DIR)/BoAT-SupportLayer demo
+        for addobj in self.usinglibs.split("\n"):
+            if addobj == '':
+                continue
+            pBOAT_BASE_DIR = './' + addobj + '/demo/'
+            isExists = os.path.exists(pBOAT_BASE_DIR)
+            print(pBOAT_BASE_DIR, isExists)
+            if isExists:
+                self.config_content += '	make -C $(BOAT_BASE_DIR)/'+addobj+' demo\n'
+            else:
+                self.config_content += '	make -C $(BOAT_BASE_DIR)/'+addobj+' all\n'
+
+        self.config_content += '\n'
+
     # targets
     def gen_targets(self):
         
@@ -405,9 +421,9 @@ class ConfigContentGen():
         self.config_content += 'vendorlib:\n'
         self.config_content += '	make -C $(BOAT_BASE_DIR)/BoAT-SupportLayer all\n'
         self.config_content += '\n'
-        self.config_content += 'demo: boatlibs\n'
-        self.config_content += '	make -C $(BOAT_BASE_DIR)/demo all\n'
-        self.config_content += '\n'
+        #self.config_content += 'demo: boatlibs\n'
+        #self.config_content += '	make -C $(BOAT_BASE_DIR)/demo all\n'
+        #self.config_content += '\n'
         self.config_content += 'rulecheck: \n'
         self.config_content += '	cppcheck  --enable=all -i$(BOAT_BASE_DIR)/sdk/third-party/ -i$(BOAT_BASE_DIR)/BoAT-SupportLayer/vendor/crypto/  -i$(BOAT_BASE_DIR)/sdk/protocol/boathlfabric/protos  --force $(BOAT_BASE_DIR) \n'
         self.config_content += '\n'
@@ -440,14 +456,14 @@ class ConfigContentGen():
             self.config_content += '	make -C $(BOAT_BASE_DIR)/'+addobj+' clean\n'
             self.config_content += '\n'
 
-        self.config_content += 'cleanvendor:\n'
-        self.config_content += '	make -C $(BOAT_BASE_DIR)/BoAT-SupportLayer clean\n'
-        self.config_content += '\n'
-        self.config_content += 'cleandemo:\n'
-        self.config_content += '	make -C $(BOAT_BASE_DIR)/demo clean\n'
-        self.config_content += '\n'
-        self.config_content += 'cleantests:\n'
-        self.config_content += '	make -C $(BOAT_BASE_DIR)/tests clean\n'
+        #self.config_content += 'cleanvendor:\n'
+        #self.config_content += '	make -C $(BOAT_BASE_DIR)/BoAT-SupportLayer clean\n'
+        #self.config_content += '\n'
+        #self.config_content += 'cleandemo:\n'
+        #self.config_content += '	make -C $(BOAT_BASE_DIR)/demo clean\n'
+        #self.config_content += '\n'
+        #self.config_content += 'cleantests:\n'
+        #self.config_content += '	make -C $(BOAT_BASE_DIR)/tests clean\n'
 
     def getEnterAsYes(self,content):
         yon = input(content+'(Y/n):')
@@ -733,6 +749,9 @@ def main():
 
         # gen test
         configContent_obj.gen_test()
+        
+        # gen demo
+        configContent_obj.gen_demo()
         
         # targets
         configContent_obj.gen_targets()
