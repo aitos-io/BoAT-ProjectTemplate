@@ -228,7 +228,7 @@
         |
         +---boatSmAppDevelop/
             |
-            +---boatSupportLayer/
+            +---BoAT-SupportLayer/
             |    |
             |    +---include/
             |    ...
