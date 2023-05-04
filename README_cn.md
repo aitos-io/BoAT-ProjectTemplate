@@ -1,4 +1,3 @@
-# BoAT-ProjectTemplate
 ## 基于 BoAT-ProjectTemplate 开发模板构建项目开发目录步骤说明
 ### 1. clone BoAT-ProjectTemplate 仓库到本地
     可以直接 clone BoAT-ProjectTemplate 仓库为开发目录
