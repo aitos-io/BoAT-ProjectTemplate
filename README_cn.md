@@ -248,7 +248,9 @@ BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发�
     2. 各个 BoATInfraArch 仓库和应用项目仓库的提交在相应的目录下进行
        例如：
         1. BoAT-SupportLayer 仓库修改后的提交在 core-sdk-1.0/boatSmAppDevelop/BoAT-SupportLayer/ 目录下执行：
+            ```
             git add .
             git commit
             git push
+            ```
         2. smApp 项目文件更改后的提交在 core-sdk-1.0/boatSmAppDevelop/smApp/ 目录中执行 git 相关操作。
