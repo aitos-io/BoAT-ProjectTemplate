@@ -48,17 +48,17 @@ BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发�
 
 2. 在 Linux 操作系统下打开Terminal终端，进入 core-sdk-1.0/目录,在目录下执行命令：
     注意，目前使用 BoAT-ProjectTemplate 仓库的 dev 分支，在 clone 时要配置 -b dev  
-
-    $ git clone -b dev git@github.com:aitos-io/BoAT-ProjectTemplate.git boatSmAppDevelop
-        Cloning into 'boatSmAppDevelop'...
-        remote: Enumerating objects: 16, done.
-        remote: Counting objects: 100% (16/16), done.
-        remote: Compressing objects: 100% (9/9), done.
-        remote: Total 16 (delta 4), reused 11 (delta 2), pack-reused 0
-        Unpacking objects: 100% (16/16), done.
-        Checking connectivity... done.
-
-    将BoAT-ProjectTemplate clone 到 boatSmAppDevelop/目录
+```
+$ git clone -b dev git@github.com:aitos-io/BoAT-ProjectTemplate.git boatSmAppDevelop
+    Cloning into 'boatSmAppDevelop'...
+    remote: Enumerating objects: 16, done.
+    remote: Counting objects: 100% (16/16), done.
+    remote: Compressing objects: 100% (9/9), done.
+    remote: Total 16 (delta 4), reused 11 (delta 2), pack-reused 0
+    Unpacking objects: 100% (16/16), done.
+    Checking connectivity... done.
+```
+将BoAT-ProjectTemplate clone 到 boatSmAppDevelop/目录
 
 3. clone 成功后，进入 core-sdk-1.0/boatSmAppDevelop/目录，目录下包含如下文件：
 
