@@ -1,35 +1,35 @@
 ## 基于 BoAT-ProjectTemplate 开发模板构建项目开发目录步骤说明
+
 ### 1. clone BoAT-ProjectTemplate 仓库到本地
-    可以直接 clone BoAT-ProjectTemplate 仓库为开发目录
-    例如：
-        构建 BoAT-SupportLayer 开发目录
-        git clone -b dev git@github.com:aitos-io/BoAT-ProjectTemplate.git boatSupportLayerDevelop
-        将 BoAT-SupportLayer 仓库 clone 到 boatSupportLayerDevelop 目录，并在此目录中开发
-    
-### 2. 修改 BoATLibs.conf 
-    BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发需要按格式添加项目中使用的 BoATInfraArch 相应仓库名称
-    例如：
-        BoAT-SupportLayer
-    
-    注意一行只能写入一个仓库名称
-    至少要保留 BoAT-SupportLayer 仓库
+可以直接 clone BoAT-ProjectTemplate 仓库为开发目录  
+例如：  
+    构建 BoAT-SupportLayer 开发目录  
+    git clone -b dev git@github.com:aitos-io/BoAT-ProjectTemplate.git boatSupportLayerDevelop  
+    将 BoAT-SupportLayer 仓库 clone 到 boatSupportLayerDevelop 目录，并在此目录中开发  
+
+### 2. 修改 BoATLibs.conf
+BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发需要按格式添加项目中使用的 BoATInfraArch 相应仓库名称  
+例如：  
+    BoAT-SupportLayer  
+注意一行只能写入一个仓库名称  
+至少要保留 BoAT-SupportLayer 仓库
 
 ### 3. 创建应用项目代码目录：(可选)
-    1. 在 GitHub 上创建应用项目源码仓库，并包含一个基础 Makefile 文件
-    2. 修改 BoATLibs.conf 文件，将应用项目源码仓库名添加到 BoATLibs.conf 文件中
-    例如：
-        BoAT-SupportLayer
-        xxxApp
+1. 在 GitHub 上创建应用项目源码仓库，并包含一个基础 Makefile 文件  
+2. 修改 BoATLibs.conf 文件，将应用项目源码仓库名添加到 BoATLibs.conf 文件中  
+例如：  
+    BoAT-SupportLayer  
+    xxxApp  
         
 ### 4. 运行 config.py 脚本，根据提示完成相应操作，完成开发目录构建
-    脚本包含两个主要执行步骤
-    1. 获取 BoATLibs.conf 文件中包含的仓库源码
-    2. 根据 获取的源码仓库生成 Makefile
-    过程中会有数次交互输入，详细过程参见 6. 实例操作说明 
+脚本包含两个主要执行步骤  
+1. 获取 BoATLibs.conf 文件中包含的仓库源码  
+2. 根据 获取的源码仓库生成 Makefile  
+过程中会有数次交互输入，详细过程参见 6. 实例操作说明   
 
 ### 5. 在不同平台构建项目开发目录位置说明 
-    1. Fibocom-L610：在 Fibocom-L610 sdk 开发环境的顶层目录下构建项目开发目录，即在 sdk 目录下按上述1~4操作执行， clone BoAT-ProjectTemplate 到本地进行开发
-    2. linux: 在任意自选位置构建项目开发目录，进入开发目录按上述1~4操作执行， clone BoAT-ProjectTemplate 到本地进行开发
+1. Fibocom-L610：在 Fibocom-L610 sdk 开发环境的顶层目录下构建项目开发目录，即在 sdk 目录下按上述1~4操作执行， clone BoAT-ProjectTemplate 到本地进行开发  
+2. linux: 在任意自选位置构建项目开发目录，进入开发目录按上述1~4操作执行， clone BoAT-ProjectTemplate 到本地进行开发  
     
 ### 6. 实例操作说明
     在 Fibocom-L610 oepnCPU 开发环境下构建 smApp 项目过程
