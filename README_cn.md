@@ -91,7 +91,7 @@ BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发�
         脚本在这里等待输入 clone BoAT-SupportLayer 仓库的分支名称或 tag 名称，
         将 BoAT-SupportLayer 仓库 clone 到 core-sdk-1.0/boatSmAppDevelop/BoAT-SupportLayer/ 目录
         目前我们选用 dev 分支进行开发，输入:dev回车,
-
+        ```
         Input the branch name or null:dev
         branch name is [ -b dev]
 
@@ -110,12 +110,12 @@ BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发�
         We will clone the smApp repository, which may take several minutes
 
         Input the branch name or null:
-
+        ```
     2.仓库分支输入交互：
         脚本在这里等待输入clone smApp 仓库的分支名称或tag名称，
         将 smApp 源码仓库 clone 到 core-sdk-1.0/boatSmAppDevelop/smApp/ 目录.
         假设我们选用 master 分支进行开发，输入:回车,
-
+        ```
         Input the branch name or null:
         branch name is []
 
@@ -130,7 +130,7 @@ BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发�
         git cmd succ
 
         overwrite the Makefile?(Y/n):
-
+        ```
     3. 重写 Makefile 交互：
         完成全部仓库 clone 后，脚本提示是否重写 Makefile，在第一次运行脚本时必须选择 Y 生成    Makefile,否则无法执行编译
         后续再次执行脚本可根据需求选择 Y 或 N
@@ -139,7 +139,7 @@ BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发�
 
         重写Makefile 将会把 BoAT-SupportLayer 和 smApp 相关编译信息添加到 Makefile 中
         执行完 config.py 脚本后，可直接编译
-
+        ```
         overwrite the Makefile?(Y/n):
         Yes
 
@@ -147,12 +147,12 @@ BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发�
         [1] linux-default             : Default linux platform
         [2] Fibocom-L610              : Fibocom's LTE Cat.1 module
         [3] create a new platform
-
+        ```
     4. 选择 platform 交互：
         交互中提供了当前 BoAT-SupportLayer 库支持的 platform 进行选择。
         [3] create a new platform 功能只做提示没有实现，后续完善该功能。
         在这里输入:2，选择 Fibocom-L610 platform                        
-
+        ```
         Choose the platform list as below:
         [1] linux-default             : Default linux platform
         [2] Fibocom-L610              : Fibocom's LTE Cat.1 module
@@ -165,11 +165,12 @@ BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发�
         File 'smApp/include/smApp.conf' is not exist
 
         Configuration completed
-
+        ```
     自此脚本运行结束，完成 BoAT-SupportLayer 和 smApp 源码拉取，并重写 Makefile
     注意，"File 'smApp/include/smApp.conf' is not exist"，这是因为 smApp 目录中没有提供相应的文件，不影响 Makefile 生成及后续编译
 
     完整的脚本执行过程如下：
+    ```
     $ python3 config.py
 
         We will clone the BoAT-SupportLayer repository, which may take several minutes
@@ -219,27 +220,27 @@ BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发�
         File 'smApp/include/smApp.conf' is not exist
 
         Configuration completed
-
+    ```
 
     脚本执行完后的目录结构如下：
-
+    ```
     core-sdk-1.0/
     |
     +---boatSmAppDevelop/
-        |
-        +---BoAT-SupportLayer/
-        |    |
-        |    +---include/
-        |    ...
-        |    |---Makefile
-        |
-        +---smApp/
-        |    |---Makefile
-        |
-        |---BoATLibs.conf
-        |---config.py
-        |---Makefile
-
+    |
+    +---BoAT-SupportLayer/
+    |    |
+    |    +---include/
+    |    ...
+    |    |---Makefile
+    |
+    +---smApp/
+    |    |---Makefile
+    |
+    |---BoATLibs.conf
+    |---config.py
+    |---Makefile
+    ```
     在 core-sdk-1.0/boatSmAppDevelop/目录下执行 make 即可完成 BoAT-SupportLayer 和 smApp 编译
 
 6. 代码提交注意：
