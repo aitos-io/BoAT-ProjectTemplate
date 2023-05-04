@@ -48,45 +48,45 @@ BoATLibs.conf 文件中已经包含 BoAT-SupportLayer 仓库，可根据开发�
 
 2. 在 Linux 操作系统下打开Terminal终端，进入 core-sdk-1.0/目录,在目录下执行命令：
     注意，目前使用 BoAT-ProjectTemplate 仓库的 dev 分支，在 clone 时要配置 -b dev  
-```
-$ git clone -b dev git@github.com:aitos-io/BoAT-ProjectTemplate.git boatSmAppDevelop
-    Cloning into 'boatSmAppDevelop'...
-    remote: Enumerating objects: 16, done.
-    remote: Counting objects: 100% (16/16), done.
-    remote: Compressing objects: 100% (9/9), done.
-    remote: Total 16 (delta 4), reused 11 (delta 2), pack-reused 0
-    Unpacking objects: 100% (16/16), done.
-    Checking connectivity... done.
-```
-将BoAT-ProjectTemplate clone 到 boatSmAppDevelop/目录
+    ```
+    $ git clone -b dev git@github.com:aitos-io/BoAT-ProjectTemplate.git boatSmAppDevelop
+        Cloning into 'boatSmAppDevelop'...
+        remote: Enumerating objects: 16, done.
+        remote: Counting objects: 100% (16/16), done.
+        remote: Compressing objects: 100% (9/9), done.
+        remote: Total 16 (delta 4), reused 11 (delta 2), pack-reused 0
+        Unpacking objects: 100% (16/16), done.
+        Checking connectivity... done.
+    ```
+    将BoAT-ProjectTemplate clone 到 boatSmAppDevelop/目录
 
 3. clone 成功后，进入 core-sdk-1.0/boatSmAppDevelop/目录，目录下包含如下文件：
-
+    ```
     core-sdk-1.0/
     |
     +---boatSmAppDevelop/
-        |---BoATLibs.conf
-        |---config.py
-
+    |---BoATLibs.conf
+    |---config.py
+    ```
 4. 根据项目需要的 BoATInfraArch 仓库，修改 BoATLibs.conf，假设smApp 仅需要 BoAT-SupportLayer 库
    1. 由于BoATLibs.conf文件默认包含BoAT-SupportLayer 库，则不需要在BoATLibs.conf文件中增加其他
    BoATInfraArch 仓库（目前只提供 BoAT-SupportLayer 仓库）。
    2. 在 BoATLibs.conf 文件中增加 smApp项目的 GitHub 仓库名，用于执行 config.py clone smApp 仓库到本地。
    查看 BoATLibs.conf 修改后的内容如下：
-
+    ```
     $ cat BoATLibs.conf 
     BoAT-SupportLayer
     smApp
-
+    ```
 5. 运行 config.py 脚本，Linux 操作系统下运行 python 脚本指令如下：
     注意，脚本执行过程中会包含几次输入交互帮助脚本完成选择。
-
+    ```
     $ python3 config.py 
 
         We will clone the BoAT-SupportLayer repository, which may take several minutes
 
         Input the branch name or null:
-
+    ```
     1.仓库分支输入交互：
         脚本在这里等待输入 clone BoAT-SupportLayer 仓库的分支名称或 tag 名称，
         将 BoAT-SupportLayer 仓库 clone 到 core-sdk-1.0/boatSmAppDevelop/BoAT-SupportLayer/ 目录
