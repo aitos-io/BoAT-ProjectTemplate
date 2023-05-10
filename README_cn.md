@@ -4,7 +4,9 @@
 可以直接 clone BoAT-ProjectTemplate 仓库为开发目录  
 例如：  
     构建 BoAT-SupportLayer 开发目录  
-    git clone -b dev git@github.com:aitos-io/BoAT-ProjectTemplate.git boatSupportLayerDevelop  
+    ```
+    git clone -b dev git@github.com:aitos-io/BoAT-ProjectTemplate.git boatSupportLayerDevelop
+    ```  
     将 BoAT-SupportLayer 仓库 clone 到 boatSupportLayerDevelop 目录，并在此目录中开发  
 
 ### 2. 修改 BoATLibs.conf
