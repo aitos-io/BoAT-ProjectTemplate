@@ -1,13 +1,13 @@
 ## 基于 BoAT-ProjectTemplate 开发模板构建BoAT应用开发项目
 `BoAT-ProjectTemplate` 仓库，是开发基于`BoAT Infra Arch`基础架构应用程序的通用开发模板。
 
-基于`BoAT Infra Arch`基础架构的应用开发，通过三个开源仓库实现。
+基于`BoAT Infra Arch`基础架构的应用开发，通过三个开源仓库实现：
 
-1.`BoAT-ProjectTemplate` : 提供编译结构构建，完成编译仓库选择和克隆到本地，根据选择的公用仓库配置相应的编译环境
+1.`BoAT-ProjectTemplate` : 提供编译结构构建，完成公共源码仓库选择并克隆到本地，根据选择的公用源码仓库配置相应的编译环境，修改Makefile。
 
-2.`BoAT-SupportLayer`：`BoAT Infra Arch`基础架构`BoAT Support Layer` 层的源码仓库，提供BoAT应用所需的底层支持，包括操作系统抽象层、驱动抽象层和BoAT通用组件层，为BoAT应用提供通用的底层操作接口。
+2.`BoAT-SupportLayer`：是`BoAT Infra Arch`基础架构`BoAT Support Layer` 层的公共源码仓库，提供BoAT应用所需的底层支持，包括操作系统抽象层、驱动抽象层和BoAT通用组件层，为BoAT应用提供通用的底层操作接口。
 
-3.`BoAT-Engine`：`BoAT Infra Arch`基础架构`BoAT Engine` 层的源码仓库，提供BoAT应用区块链访问相关的API接口，实现BoAT应用对不同区块链的访问。
+3.`BoAT-Engine`：是`BoAT Infra Arch`基础架构`BoAT Engine` 层的公共源码仓库，提供BoAT应用区块链访问相关的API接口，实现BoAT应用对不同区块链的访问。
 
 以上三个仓库与应用平台共同构成基于`BoAT Infra Arch`基础架构的开发环境，BoAT应用就在这里诞生。
 
@@ -15,22 +15,18 @@
 
 ### 开发环境准备
 
-在Linux操作系统中构建，基于`BoAT Infra Arch`基础架构的应用开发环境，需要确认在linux平台下已经完成以下依赖库和软件的安装
+在Linux操作系统中构建基于`BoAT Infra Arch`基础架构的应用开发环境，需要确认在linux平台下已经完成以下依赖库和软件的安装：
 1. curl
 ```
 sudo apt install curl
 ```
 
-2. libsubunit-dev
-```
-sudo apt install libsubunit-dev
-```
-
-3. python3, version >= 3.5
+2. python3, version >= 3.5
 ```
 sudo apt install python3
 ```
-5. git
+
+3. git
 ```
 sudo apt install git
 ```
@@ -45,31 +41,31 @@ git clone https://github.com/aitos-io/BoAT-ProjectTemplate.git
 执行成功后，当前路径下将创建`BoAT-ProjectTemplate`目录，存放从`github`克隆的开发模板。
 克隆后`BoAT-ProjectTemplate/`目录的内容如下：
 ```
-BoAT-ProjectTemplate
+<BoAT-ProjectTemplate>
 |-- BoATLibs.conf
 |-- config.py
 |-- README.md
 |-- README_cn.md
 ```
-也可以将 BoAT-ProjectTemplate 仓库克隆为开发项目目录，构建 `boatDevelop` 开发目录  
+也可以将 BoAT-ProjectTemplate 仓库克隆为开发项目目录，例如:构建 `boatDevelop` 开发目录  
 ```
-git clone -b dev git@github.com:aitos-io/BoAT-ProjectTemplate.git boatDevelop
+git clone https://github.com/aitos-io/BoAT-ProjectTemplate.git boatDevelop
 ```  
-将 `BoAT-SupportLayer`` 仓库克隆 到 `boatevelop` 目录，并在此目录中开发  
+将 `BoAT-SupportLayer`` 仓库克隆 到 `boatDevelop` 目录，并在此目录中开发  
 
 ### 2. 修改 BoATLibs.conf
 `BoATLibs.conf`文件用于配置当前项目中所使用的开源仓库，后续配置脚本通过读取当前文件的配置信息，克隆相应的开源仓库到本地。
 
 `BoATLibs.conf` 文件默认包含 `BoAT-SupportLayer` 仓库，内容如下：
-    ```
-    BoAT-SupportLayer  
-    ```
+```
+BoAT-SupportLayer  
+```
 
 在当前示例项目中，还会使用`BoAT Engine`开源仓库，所以在`BoATLibs.conf`文件中增加`BoAT-Engine`，添加后的内容如下：
-    ```
-    BoAT-SupportLayer  
-    BoAT-Engine
-    ```
+```
+BoAT-SupportLayer  
+BoAT-Engine
+```
 
 改写`BoATLibs.conf`文件时需要注意：
 ```
@@ -83,11 +79,11 @@ git clone -b dev git@github.com:aitos-io/BoAT-ProjectTemplate.git boatDevelop
 `config.py`脚本包含两个主要执行步骤  
 1. 克隆 `BoATLibs.conf` 文件中包含的仓库源码  
 2. 根据 获取的源码仓库生成 `Makefile`  
+
 在`BoAT-ProjectTemplate/`目录下执行脚本配置，执行过程中会有数次交互输入，详细过程如下：
 ```
 python3 config.py
 ```
-
 
 ```
 We will clone the BoAT-SupportLayer repository, which may take several minutes
@@ -157,7 +153,7 @@ Yes
 
 input:
 ```
-这里输入应用程序中需要支持的区块链，输入`9`，选择`venachain`区块链。
+这里输入应用程序中需要支持的区块链，输入`9`，选择`VENACHAIN`区块链。
 ```
 input:9
 Blockchain selected:
@@ -184,7 +180,7 @@ Configuration completed
 
 执行完配置后，开发目录将包含以下内容：
 ```
-BoAT-ProjectTemplate
+<BoAT-ProjectTemplate>
 |-- <BoAT-SupportLayer>
 |-- <BoAT-Engine>
 |-- BoATLibs.conf
@@ -200,25 +196,28 @@ BoAT-ProjectTemplate
 ```
 make demo VENACHAIN_DEMO_IP="127.0.0.1"
 ```
-其中`VENACHAIN_DEMO_IP="127.0.0.1"`，由提供一个`venachain`访问节点的IP地址宏，这需要根据使用者提供正确的节点IP宏，否则`venachain`的 `demo`程序无法正确访问节点，错误的宏不影响编译。
+其中`VENACHAIN_DEMO_IP="127.0.0.1"`，由开发者提供一个`VENACHAIN`访问节点的IP地址宏`VENACHAIN_DEMO_IP`，其中`"127.0.0.1"`仅是一个示例。在实际应用中，需要开发者提供正确的节点IP宏，否则`VENACHAIN`的 `demo`程序无法正确访问节点，错误的宏虽不影响编译，但会导致区块链节点访问失败。
 
 编译过程中可能会遇到以下错误，按照给出的处理方法可解决相应问题。
+
 常见错误错误1：
 ```
 curlport.c:33:23: fatal error: curl/curl.h: No such file or directory
 ```
 安装`libcurl4-gnutls-dev`依赖库：
 ```
-sudo apt-get install libcurl4-gnutls-dev
+sudo apt install libcurl4-gnutls-dev
 ```
+
 常见错误错误2：
 ```
 boatssl.c:26:25: fatal error: openssl/evp.h: No such file or directory
 ```
 安装`libssl-dev`依赖库
 ```
-sudo apt-get install libssl-dev
+sudo apt install libssl-dev
 ```
+
 完成编译后`BoAT-ProjectTemplate`路径下的目录包含如下内容：
 ```
 <BoAT-ProjectTemplate>
@@ -250,8 +249,8 @@ sudo apt-get install libssl-dev
 
 `build:`
 
-输出编译过程中产生的中间文件以及各个源码库中产生的demo的可执行文件，本例中输出了`venachain`的`demo`可执行文件
-在本例中 `venachain` 的demo输出在`BoAT-ProjectTemplate/build/BoAT-Engine/demo/demo_venachain/`目录，包含六个可执行文件：
+输出编译过程中产生的中间文件以及各个源码库中产生的demo的可执行文件，本例中输出了`VENACHAIN`的`demo`可执行文件
+在本例中 `VENACHAIN` 的`demo`输出在`BoAT-ProjectTemplate/build/BoAT-Engine/demo/demo_venachain/`目录，包含六个可执行文件：
 ```
 demo_venachain_mycontract_create_internalGen
 demo_venachain_mycontract_create_native
