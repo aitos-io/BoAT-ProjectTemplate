@@ -3,13 +3,14 @@
 
 The `BoAT-ProjectTemplate` repository is a universal development template for developing applications based on the `BoAT Infra Arch` infrastructure.
 
-Application development based on the `BoAT Infra Arch` infrastructure is achieved through three open-source repositories.
+Application development based on the `BoAT Infra Arch` infrastructure is achieved through three open-source repositories：
 
-1. `BoAT-ProjectTemplate`: provides a compilation structure, selects and clones compilation repositories to the local system, and configures the corresponding compilation environment according to the selected public repository.
+1. `BoAT-ProjectTemplate`: Provides a build structure, selects and clones the public source code repository to the local environment, configures the corresponding build environment according to the selected public source code repository, and modifies the Makefile.
 
-2. `BoAT-SupportLayer`: is the source code repository of the `BoAT Support Layer` of the `BoAT Infra Arch` infrastructure, which provides the underlying support required by BoAT applications, including an operating system abstraction layer, a driver abstraction layer, and a BoAT general component layer, providing common underlying operation interfaces for BoAT applications.
+2. `BoAT-SupportLayer`: The public source code repository for the `BoAT Support Layer`, which is the foundation of the `BoAT Infra Arch`, provides the underlying support required for BoAT applications, including the operating system abstraction layer, driver abstraction layer, and BoAT common component layer, to provide a universal low-level operation interface for BoAT applications.
 
-3. `BoAT-Engine`: is the source code repository of the `BoAT Engine` layer of the `BoAT Infra Arch` infrastructure, which provides API interfaces related to blockchain access for BoAT applications, implementing BoAT application's access to different blockchains.
+3. `BoAT-Engine`: `BoAT-Engine` is a public source code repository for the `BoAT Engine` layer of the `BoAT Infra Arch` foundation. It provides API interfaces for BoAT applications to access blockchains and realize access to different blockchains.
+To build an application development environment based on the `BoAT Infra Arch` foundation in the Linux operating system, it is necessary to confirm that the following dependency libraries and software have been installed on the Linux platform.
 
 These three repositories and the application platform jointly constitute the development environment based on the `BoAT Infra Arch` infrastructure, where BoAT applications are born.
 
@@ -24,17 +25,12 @@ To build the application development environment based on the `BoAT Infra Arch` 
 sudo apt install curl
 ```
 
-2. libsubunit-dev
-```
-sudo apt install libsubunit-dev
-```
-
-3. python3, version >= 3.5
+2. python3, version >= 3.5
 ```
 sudo apt install python3
 ```
 
-4. git
+3. git
 ```
 sudo apt install git
 ```
@@ -50,7 +46,7 @@ git clone https://github.com/aitos-io/BoAT-ProjectTemplate.git
 After successful execution, a `BoAT-ProjectTemplate` directory will be created in the current path, which stores the development template cloned from GitHub. The contents of the `BoAT-ProjectTemplate/` directory after cloning are as follows:
 
 ```
-BoAT-ProjectTemplate
+<BoAT-ProjectTemplate>
 |-- BoATLibs.conf
 |-- config.py
 |-- README.md
@@ -60,7 +56,7 @@ BoAT-ProjectTemplate
 You can also clone the `BoAT-ProjectTemplate` repository as the development project directory and build the `boatDevelop` development directory:
 
 ```
-git clone -b dev git@github.com:aitos-io/BoAT-ProjectTemplate.git boatDevelop
+git clone https://github.com/aitos-io/BoAT-ProjectTemplate.git boatDevelop
 ```
 
 Clone the `BoAT-SupportLayer` repository to the `boatDevelop` directory and develop in this directory.
@@ -86,10 +82,15 @@ When modifying the `BoATLibs.conf` file, please note:
 
 ```
 1. Only one repository name can be written in one line.
-2. The repository name must be correct, especially pay attention to case sensitivity. The cloned directory name will be the same as the name written. If the case is wrong, it will not affect the result of `git clone`, but it will cause errors in the configuration script execution.
+2. The repository name must be correct, especially pay attention to case sensitivity. 
+   The cloned directory name will be the same as the name written. If the case is wrong, 
+   it will not affect the result of `git clone`, but it will cause errors in the 
+   configuration script execution.
 ```
 
-### 3. Run the config.py script and complete the compilation directory construction and compilation file configuration according to the prompts.
+### 3. Run the `config.py` script
+
+Follow the prompts and input the options to complete the compilation directory construction and compile file configuration.
 
 The `config.py` script contains two main execution steps:
 
@@ -176,7 +177,7 @@ Yes
 input:
 ```
 
-Enter the blockchain that needs to be supported in the application here. Enter `9` to select the `venachain` blockchain. 
+Enter the blockchain that needs to be supported in the application here. Enter `9` to select the `VENACHAIN` blockchain. 
 
 ```
 input:9
@@ -207,7 +208,7 @@ Configuration completed
 After the configuration is completed, the development directory will contain:
 
 ```
-BoAT-ProjectTemplate
+<BoAT-ProjectTemplate>
 |-- <BoAT-SupportLayer>
 |-- <BoAT-Engine>
 |-- BoATLibs.conf
@@ -224,7 +225,7 @@ Execute the compilation command in the `BoAT-ProjectTemplate/` directory:
 make demo VENACHAIN_DEMO_IP="127.0.0.1"
 ```
 
-Among them, `VENACHAIN_DEMO_IP="127.0.0.1"` provides a macro for the IP address of a `venachain` access node. This requires the correct node IP macro provided by the user. Otherwise, the `demo` program of `venachain` cannot access the node correctly. Incorrect macros do not affect compilation.
+The line `VENACHAIN_DEMO_IP="127.0.0.1"`, requires the developer to provide a macro `VENACHAIN_DEMO_IP` with the IP address of a `VENACHAIN` access node, where `"127.0.0.1"` is just an example. In actual applications, the developer needs to provide the correct node IP macro, otherwise the `VENACHAIN` `demo` program will fail to access the node correctly. Although an incorrect macro does not affect compilation, it will cause blockchain node access failure.
 
 During the compilation process, you may encounter the following errors. Follow the given processing method to solve the corresponding problem.
 
@@ -237,7 +238,7 @@ curlport.c:33:23: fatal error: curl/curl.h: No such file or directory
 Install the `libcurl4-gnutls-dev` dependency library:
 
 ```
-sudo apt-get install libcurl4-gnutls-dev
+sudo apt install libcurl4-gnutls-dev
 ```
 
 Common Error 2:
@@ -249,7 +250,7 @@ boatssl.c:26:25: fatal error: openssl/evp.h: No such file or directory
 Install the `libssl-dev` dependency library:
 
 ```
-sudo apt-get install libssl-dev
+sudo apt install libssl-dev
 ```
 
 After the compilation is completed, the `BoAT-ProjectTemplate` directory contains the following contents:
@@ -286,7 +287,7 @@ After the compilation is completed in the `BoAT-ProjectTemplate/` directory, two
 
 `build:`
 
-Output the intermediate files produced during the compilation process and the executable files of the demos produced in each source code library. In this example, the executable files of `demo` of `venachain` are output. In this example, the `demo` output of `venachain` is in the `BoAT-ProjectTemplate/build/BoAT-Engine/demo/demo_venachain/` directory, which contains six executable files:
+Output intermediate files generated during compilation and executable files of demos generated in each source code repository. In this example, the output of the `VENACHAIN` demo is in the `BoAT-ProjectTemplate/build/BoAT-Engine/demo/demo_venachain/` directory, which contains six executable files:
 
 ```
 demo_venachain_mycontract_create_internalGen
