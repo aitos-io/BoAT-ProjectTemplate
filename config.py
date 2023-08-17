@@ -86,6 +86,7 @@ class ConfigContentGen():
         self.config_content = ''
         self.usinglibs = ''
         self.exportblockchain = ''
+        self.gituser = 2
 
     def save_config_file(self):
             #config_file_name = './vendor/platform/include/boatconfig.h'
@@ -607,8 +608,11 @@ class ConfigContentGen():
     def isgit(self):
         cmd = 'git pull'
     
-    def rungitcmd(self,cmd):
+    def rungitcmd(self,cmd1,cmd2):
         while(1):
+            cmd = cmd1
+            if self.gituser == 2:
+                cmd = cmd2
             print(cmd+'\n')
             #self.boatlog('current path:',os.getcwd())
             try:
@@ -631,6 +635,10 @@ class ConfigContentGen():
                     print('failed ,but no retry\n')
                     return False
                 print('retry')
+                if self.gituser == 2:
+                    self.gituser = 1
+                else:
+                    self.gituser = 2
             else:
                 print('git cmd succ\n')
                 return True
@@ -646,9 +654,11 @@ class ConfigContentGen():
         if branch_name != '':
             branch_name = ' -b ' + branch_name
         print('branch name is [' + branch_name + ']\n')
-        cmd = 'git clone' + branch_name + ' https://github.com/aitos-io/' + reponame + '.git'
-
-        if self.rungitcmd(cmd):
+        
+        cmd1 = 'git clone' + branch_name + ' https://github.com/aitos-io/' + reponame + '.git'
+        cmd2 = 'git clone' + branch_name + ' git@github.com:aitos-io/' + reponame + '.git'
+        #print(self.gituser,cmd1,cmd2)
+        if self.rungitcmd(cmd1,cmd2):
             #git pull succ, record the repo name
             self.usinglibs += reponame+'\n' 
             return True
