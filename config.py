@@ -618,7 +618,7 @@ class ConfigContentGen():
             count += 1
         
         chos = input("Input the platform number:")
-        if chos == '1':
+        if chos == '1' or chos == '':
             print('platform is : linux-default\n')
             return 'linux-default'
         else :
