@@ -811,37 +811,4 @@ def main():
     print("Configuration completed\n")
 
 if __name__ == '__main__':
-    '''
-        folder_path = './BoAT-SupportLayer/platform'
-        subfolders = [f for f in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, f))]
-        subfolders.remove('include')
-        subfolders.remove('linux-default')
-        print("\r\n")
-        ppf = 'Select the platform list as below:\n' + \
-            '  [1] linux-default             : Default linux platform'
-        print(ppf)
-        count = 2
-        for folder in subfolders:
-            print('  [{}] {}'.format(count, folder))
-            count += 1
-        
-        chos = input("Input the platform number:")
-        if chos == '1':
-            print('platform is : linux-default\n')
-            #return 'linux-default'
-        else :
-            while(1):
-                try:
-                    count = int(chos,10) - 2
-                except:
-                    print("Enter the correct number, try again")
-                    chos = input("Input the platform number:")
-                    continue
-                if (count >= len(subfolders)):
-                    print("Inpurt error, try again")
-                    chos = input("Input the platform number:")
-                else :
-                    print("The platform is \r\n  [{}] {}".format(count+2, subfolders[count]))
-                    break
-    '''
     main()
